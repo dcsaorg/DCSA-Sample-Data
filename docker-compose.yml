@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+    dcsa-sample-data:
+        container_name: dcsa_sample_data
+        build: DCSA-Sample-Data/nginx/
+        restart: always
+        ports:
+            - 9081:80

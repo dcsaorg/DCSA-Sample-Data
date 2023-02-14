@@ -1,0 +1,147 @@
+# Reference data
+
+# All tables:
+#  * table - name of the table to populate
+#  * file - name of csv file to read data from
+#  * columns (list) - list of columns in the table if it can not be guessed from csvheader (optional*)
+#  * primaryKey - name of the primary key in the table if it is not the first column (optional*)
+#  * csvheader - true or false, overrides the default (optional)
+#  * emptyIsNull - true or false, overrides the default (optional)
+#  * otherNullValues - if need to override the default (optional)
+#
+# Note on columns:
+# The columns are deduced from the csvheader if there is one by some simple rules. Spaces and dashes (-) are
+# converted to underscore, camelCase is converted to snake_case and the name is trimmed. In cases where the csvheader
+# is absent or the columns can not be deduced in this way or if the columns are not all of type string it becomes
+# necessary to specify the columns manually.
+# To specify the type of a column simply append a colon and the type to the name so instead "display_order"
+# use "display_order:int". The csvloader does the following type conversions:
+#  * "int", "integer" -> Integer::parseInt
+#  * "long" -> Long::parseLong
+#  * "bool", "boolean" -> Boolean::parseBoolean
+#  * "real", "float" -> Float::parseFloat
+#  * "double" -> Double::parseDouble
+#  * "str", "string" -> s -> s
+# If no type is specified string is assumed.
+#
+# Note on primaryKey:
+# Knowing the primary key becomes necessary if the first column is not the primary key for the case where a file is
+# changed and the csvloader runs in "REFRESH" mode.
+#
+defaults:
+  # Default config for the tables in this set. Can be overridden pr table.
+
+  # If true the first line is a header and the loader will try to guess column names from this
+  # If false "columns" is mandatory for every table
+  csvheader: true
+
+  # An empty value (ie. the empty string) is interpreted as null
+  emptyIsNull: true
+
+  # These values are also recognized and set to null on insert
+  otherNullValues: ["null", "<null>"]
+
+
+tables:
+  - table: cargo_movement_type
+    file: cargomovementtypes.csv
+
+  - table: code_list_responsible_agency
+    file: codelistresponsibleagencycodes.csv
+    columns: [dcsa_responsible_agency_code,code_list_responsible_agency_code,code_list_responsible_agency_name,code_list_responsible_agency_description]
+
+  - table: communication_channel_qualifier
+    file: communicationchannelqualifier.csv
+
+  - table: cut_off_time
+    file: cutofftimecodes.csv
+
+  - table: document_type
+    file: documenttypecodes.csv
+    emptyIsNull: false
+
+  - table: empty_indicator
+    file: emptyindicatorcodes.csv
+
+  - table: equipment_event_type
+    file: equipmenteventtypecodes.csv
+
+  - table: event_classifier
+    file: eventclassifiercodes.csv
+    emptyIsNull: false
+
+  - table: facility_type
+    file: facilitytypes.csv
+
+  - table: mode_of_transport
+    file: modeoftransportcodes.csv
+
+  - table: operations_event_type
+    file: operationseventtypecodes.csv
+    emptyIsNull: false
+
+  - table: party_function
+    file: partyfunctioncodes.csv
+    emptyIsNull: false
+
+  - table: payment_term_type
+    file: paymentterms.csv
+
+  - table: port_call_phase_type
+    file: portcallphasetypecodes.csv
+
+  - table: port_call_service_type
+    file: portcallservicetypecodes.csv
+
+  - table: port_call_status_type
+    file: portcallstatuscodes.csv
+    columns: [port_call_status_type_code, port_call_status_type_name, port_call_status_type_description]
+
+  - table: receipt_delivery_type
+    file: receiptdeliverytypes.csv
+
+  - table: reference_type
+    file: referencetypes.csv
+
+  - table: seal_source
+    file: sealsourcecodes.csv
+
+  - table: seal_type
+    file: sealtypecodes.csv
+
+  - table: shipment_event_type
+    file: shipmenteventtypecodes.csv
+
+  - table: shipment_location_type
+    file: shipmentlocationtypes.csv
+    emptyIsNull: false
+
+  - table: transport_document_type
+    file: transportdocumenttypecodes.csv
+
+  - table: transport_event_type
+    file: transporteventtypecodes.csv
+    columns: [transport_event_type_code, transport_event_type_name, transport_event_type_description]
+    emptyIsNull: false
+
+  - table: transport_plan_stage_type
+    file: transportplanstagetypes.csv
+    columns: [transport_plan_stage_code, transport_plan_stage_name, transport_plan_stage_description]
+
+  - table: unit_of_measure
+    file: unitofmeasures.csv
+    emptyIsNull: false
+
+  - table: value_added_service_code
+    file: valueaddedservicecodes.csv
+
+  - table: vessel_sharing_agreement_type
+    file: vesselsharingagreementtypes.csv
+
+  - table: vessel_type
+    file: vesseltypecodes.csv
+
+  - table: ebl_solution_provider_type
+    file: eblsolutionproviders.csv
+    columns: [ebl_solution_provider_name, ebl_solution_provider_code, ebl_solution_provider_url, ebl_solution_provider_description]
+    primaryKey: ebl_solution_provider_code
